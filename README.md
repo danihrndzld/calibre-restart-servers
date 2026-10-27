@@ -64,7 +64,7 @@ The same workflow also builds the zip on every push to `main` and on pull reques
 The plugin is released under the [GNU General Public License v3][license-url], the same license calibre uses.
 
 [mobileread-image]: https://img.shields.io/badge/MobileRead-Plugin%20Thread-blue
-[mobileread-url]: https://www.mobileread.com/forums/forumdisplay.php?f=237
+[mobileread-url]: https://www.mobileread.com/forums/showthread.php?p=4618802#post4618802
 
 [changelog-image]: https://img.shields.io/badge/History-CHANGELOG-blue.svg
 [changelog-url]: CHANGELOG.md
