@@ -6,6 +6,7 @@
 [![calibre Version][calibre-image]][calibre-url]
 [![Version][version-image]][release-url]
 [![Status][status-image]][status-url]
+[![Languages][languages-image]][languages-url]
 
 ## Overview
 
@@ -21,6 +22,12 @@ Doing the restart by hand from the Connect/share menu takes five clicks and two 
 4. Last, it shows "Servers restarted" and the port number in the calibre status bar for 8 seconds.
 
 If either server fails to start, the plugin shows an error dialog with the message calibre returned. The Connect/share menu shows the new state after the restart, so you can check the IP address and port there.
+
+## Languages
+
+The plugin is available in English and Spanish, and calibre picks the language from Preferences > Look & feel > User interface language. English is the source language, so any language without a translation shows the English text.
+
+To add a language, copy `translations/messages.pot` to `translations/<code>.po`, e.g., `fr.po`, fill in each `msgstr`, and run `./build.sh`. The build script compiles every `.po` file into a `.mo` file and puts it in the zip. When you add or change a string in the code, regenerate the template with `xgettext -L Python --from-code=UTF-8 --no-location -k_ -o translations/messages.pot __init__.py ui.py` and update each `.po` file with `msgmerge -U translations/es.po translations/messages.pot`.
 
 ## Requirements
 
@@ -38,7 +45,7 @@ You can also install the zip from a terminal with `calibre-customize -a restart-
 
 ## Building from source
 
-Run `./build.sh` to create `dist/restart-servers-<version>.zip`. The script reads the version from `__init__.py`, so you don't pass it by hand.
+Run `./build.sh` to create `dist/restart-servers-<version>.zip`. The script needs `msgfmt` from GNU gettext, which you can install on macOS with `brew install gettext`. The script reads the version from `__init__.py`, so you don't pass it by hand.
 
 While you work on the code, `calibre-customize -b .` installs the plugin straight from the folder, and `calibre-debug -g` starts calibre with its log printed in the terminal.
 
@@ -49,6 +56,8 @@ While you work on the code, `calibre-customize -b .` installs the plugin straigh
 3. Third, commit, then tag and push, e.g., `git tag v0.2.0 && git push origin main v0.2.0`.
 
 The GitHub Actions workflow in `.github/workflows/release.yml` fails if the tag doesn't match the version in `__init__.py`. When the versions match, it builds the zip and creates a GitHub release with the changelog section as the release notes.
+
+If GitHub Actions can't run, e.g., because the account hit its Actions spending limit, you can publish the release from your machine with `./build.sh` and `gh release create v0.2.0 dist/restart-servers-0.2.0.zip --notes-file <notes>`.
 
 ## License
 
@@ -71,3 +80,6 @@ The plugin is released under the [GNU General Public License v3][license-url], t
 
 [status-image]: https://img.shields.io/badge/Status-Beta-orange
 [status-url]: CHANGELOG.md
+
+[languages-image]: https://img.shields.io/badge/Languages-English%20%7C%20Espa%C3%B1ol-blueviolet
+[languages-url]: translations/

@@ -8,3 +8,4 @@ All notable changes to the Restart Servers plugin are listed here. The format fo
 
 - Toolbar button "Restart servers" that stops and starts the Content server and the wireless device connection with no dialogs.
 - Status bar message when both servers are running again, and an error dialog with details if either one fails to start.
+- English and Spanish translations. calibre uses the language set in its interface preferences.

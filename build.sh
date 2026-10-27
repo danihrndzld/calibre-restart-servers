@@ -6,5 +6,6 @@ version=$(python3 -c "import re; print('.'.join(re.search(r'version = \((\d+), (
 mkdir -p dist
 out="dist/restart-servers-$version.zip"
 rm -f "$out"
-zip -q "$out" __init__.py ui.py plugin-import-name-restart_servers.txt LICENSE
+for po in translations/*.po; do msgfmt --check -o "${po%.po}.mo" "$po"; done
+zip -q "$out" __init__.py ui.py plugin-import-name-restart_servers.txt LICENSE translations/*.mo
 echo "$out"
