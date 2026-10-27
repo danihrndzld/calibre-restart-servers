@@ -57,7 +57,7 @@ While you work on the code, `calibre-customize -b .` installs the plugin straigh
 
 The GitHub Actions workflow in `.github/workflows/release.yml` fails if the tag doesn't match the version in `__init__.py`. When the versions match, it builds the zip and creates a GitHub release with the changelog section as the release notes.
 
-If GitHub Actions can't run, e.g., because the account hit its Actions spending limit, you can publish the release from your machine with `./build.sh` and `gh release create v0.2.0 dist/restart-servers-0.2.0.zip --notes-file <notes>`.
+The same workflow also builds the zip on every push to `main` and on pull requests, and it keeps the zip as a run artifact without publishing a release.
 
 ## License
 

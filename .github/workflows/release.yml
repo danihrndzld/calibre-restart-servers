@@ -1,14 +1,16 @@
-name: Release
+name: Build and release
 
 on:
   push:
+    branches: [main]
     tags: ['v*']
+  pull_request:
 
 permissions:
   contents: write
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,13 +19,19 @@ jobs:
       - name: Build plugin zip
         id: build
         run: echo "zip=$(./build.sh)" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: restart-servers-zip
+          path: ${{ steps.build.outputs.zip }}
       - name: Check tag matches plugin version
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           case "${{ steps.build.outputs.zip }}" in
             *"-${GITHUB_REF_NAME#v}.zip") ;;
             *) echo "Tag $GITHUB_REF_NAME does not match version in __init__.py"; exit 1 ;;
           esac
       - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
